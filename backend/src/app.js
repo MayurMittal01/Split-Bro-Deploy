@@ -110,6 +110,13 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+app.get('/', (req, res) => {
+    res.status(200).json({
+        message: 'Welcome to Split Bro Backend API!',
+        documentation: '/api/health',
+        version: '2.0.0'
+    })
+});
 
 // 7. Mount REST API Routes
 app.use('/api/auth', authRoutes);
