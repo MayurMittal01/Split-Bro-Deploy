@@ -124,7 +124,7 @@ app.get('/', (req, res) => {
         message: 'Welcome to Split Bro Backend API!',
         documentation: '/api/health',
         version: '2.0.0'
-    });
+    })
 });
 
 // 7. Mount REST API Routes
