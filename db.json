@@ -1,0 +1,36 @@
+{
+  "groups": [
+    {
+      "groupName": "Goa Trip",
+      "createdBy": "MAYUR01",
+      "members": [
+        "MAYUR01",
+        "SATVIK01",
+        "SHRIYA01"
+      ],
+      "groupId": "GRP1791723423051F923",
+      "groupCode": "61312B",
+      "expenses": [],
+      "settledPayments": [],
+      "createdAt": "2026-10-11T12:57:03.051Z"
+    },
+    {
+      "groupId": "GRP17917240240357FF9",
+      "groupName": "Shimla",
+      "groupCode": "FTV8ZY",
+      "createdBy": "MAYUR01",
+      "members": [
+        "MAYUR01",
+        {
+          "memberId": "GUEST_17917240148477yh1",
+          "name": "Mayur",
+          "type": "guest",
+          "userId": null
+        }
+      ],
+      "expenses": [],
+      "settledPayments": [],
+      "createdAt": "2026-10-11T13:07:01.798Z"
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Split Bro | Add Expense</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="alternate icon" type="image/png" href="assets/favicon.png">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css?v=3"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/expense.css?v=3"
+    >
+
+</head>
+
+<body>
+
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a
+            href="dashboard.html"
+            class="logo"
+        >
+
+            <span class="logo-icon">
+                <i class="fa-solid fa-wallet"></i>
+            </span>
+
+            <span>
+                Split <strong>Bro</strong>
+            </span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="groups.html">
+                Groups
+            </a>
+
+            <a
+                href="addExpense.html"
+                class="active"
+            >
+                Add Expense
+            </a>
+
+            <a href="settlement.html">
+                Settlement
+            </a>
+
+        </div>
+
+
+        <div class="user-menu">
+
+            <button
+                class="user-menu-button"
+                id="userMenuButton"
+            >
+
+                <span
+                    class="user-menu-avatar"
+                    id="navUserAvatar"
+                >
+                    M
+                </span>
+
+                <span
+                    class="user-menu-name"
+                    id="navUserName"
+                >
+                    User
+                </span>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </button>
+
+
+            <div
+                class="user-dropdown"
+                id="userDropdown"
+            >
+
+                <div class="user-dropdown-header">
+
+                    <strong id="dropdownUserName">
+                        User
+                    </strong>
+
+                    <span id="dropdownUserId">
+                        USER01
+                    </span>
+
+                </div>
+
+
+                <a href="profile.html" class="user-dropdown-item">
+    <i class="fa-solid fa-user"></i>
+    My Profile
+</a>
+
+<a href="history.html" class="user-dropdown-item">
+    <i class="fa-solid fa-clock-rotate-left"></i>
+    Settlement History
+</a>
+
+<a href="dashboard.html#how-it-works" class="user-dropdown-item">
+    <i class="fa-solid fa-circle-question"></i>
+    How It Works
+</a>
+
+<a
+    href="insights.html"
+    class="user-dropdown-item"
+>
+    <i class="fa-solid fa-chart-pie"></i>
+    Spending Insights
+</a>
+
+<button
+    class="user-dropdown-item logout-item"
+    id="logoutButton"
+>
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Logout
+</button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main class="expense-page">
+
+    <section class="expense-heading">
+
+        <div>
+
+            <span class="section-tag">
+                SHARED EXPENSE
+            </span>
+
+            <h1>
+                Add Expense
+            </h1>
+
+            <p>
+                Record an expense and let Split Bro divide it fairly.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="expense-layout" style="display:block; max-width:960px; margin:0 auto;">
+
+        <div class="expense-form-card" style="width:100%; box-sizing:border-box; padding:36px; border-radius:24px; background:rgba(10,20,39,0.85); border:1px solid rgba(255,255,255,0.08); box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+
+            <form id="expenseForm">
+
+                <!-- 1. GROUP SELECTION -->
+                <div class="expense-field" style="margin-bottom:24px;">
+                    <label for="expenseGroupSelect" style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:8px; display:block;">
+                        <i class="fa-solid fa-users" style="color:#38bdf8; margin-right:6px;"></i> Select Group
+                    </label>
+                    <div class="expense-input">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <select id="expenseGroupSelect">
+                            <option value="">-- Choose Group --</option>
+                        </select>
+                    </div>
+                    <span class="expense-error" id="groupError"></span>
+                </div>
+
+                <!-- 2. BILL / RECEIPT PHOTO SCANNER (MULTER & LIVE OCR) -->
+                <div class="expense-field receipt-upload-field" style="margin-bottom:28px;">
+                    <label style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:8px; display:flex; align-items:center;">
+                        <span>
+                            <i class="fa-solid fa-camera" style="color:#10b981; margin-right:6px;"></i> Bill / Receipt Photo (Multer Upload &amp; OCR Data Extraction)
+                        </span>
+                    </label>
+
+                    <div class="receipt-drop-box" id="receiptDropZone" style="border:2px dashed rgba(56,189,248,0.4); background:rgba(15,23,42,0.6); border-radius:16px; padding:24px; text-align:center; cursor:pointer; transition:all 0.2s ease;">
+                        <input type="file" id="receiptFileInput" name="receipt" accept="image/jpeg,image/png,image/webp,application/pdf" style="display:none;">
+
+                        <div class="drop-content" id="dropContent">
+                            <div class="drop-icon" style="font-size:36px; color:#38bdf8; margin-bottom:10px;">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <h4 style="font-size:15px; margin:0 0 6px; color:#f8fafc; font-weight:600;">
+                                Click or Drag &amp; Drop Bill / Receipt Photo
+                            </h4>
+                            <p style="font-size:12px; margin:0 0 14px; color:#94a3b8;">
+                                Upload bill (JPG, PNG, WEBP) &bull; Automatically extracts total amount, merchant name, category, and date
+                            </p>
+                            <button type="button" class="btn-browse-photo" id="btnBrowseReceipt" style="background:#0284c7; color:#fff; border:none; padding:9px 20px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+                                <i class="fa-solid fa-image"></i> Browse Receipt Photo
+                            </button>
+                        </div>
+
+                        <div class="receipt-preview-box" id="receiptPreviewBox" style="display:none; align-items:center; gap:18px; text-align:left; background:rgba(30,41,59,0.7); padding:16px; border-radius:12px;">
+                            <div class="preview-img-wrap" style="width:85px; height:85px; border-radius:10px; overflow:hidden; background:#090d16; border:1px solid rgba(255,255,255,0.1); flex-shrink:0;">
+                                <img id="receiptImagePreview" alt="Receipt preview" style="width:100%; height:100%; object-fit:cover;">
+                            </div>
+                            <div class="preview-meta" style="flex:1; display:flex; flex-direction:column; gap:5px;">
+                                <strong id="receiptFileName" style="color:#f8fafc; font-size:14px;">receipt.jpg</strong>
+                                <span id="receiptFileSize" style="color:#94a3b8; font-size:12px;">0 KB</span>
+                                <div class="ocr-badge" id="ocrStatusBadge" style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:14px; font-size:11px; font-weight:600; background:rgba(16,185,129,0.15); color:#34d399; width:fit-content;">
+                                    <i class="fa-solid fa-sparkles"></i> Ready to scan
+                                </div>
+                                <button type="button" class="btn-remove-receipt" id="btnRemoveReceipt" style="background:none; border:none; color:#f87171; font-size:12px; cursor:pointer; padding:0; margin-top:4px; text-align:left; display:inline-flex; align-items:center; gap:6px;">
+                                    <i class="fa-solid fa-trash-can"></i> Remove Photo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="extracted-alert" id="extractedAlert" style="display:none; margin-top:12px; padding:12px 16px; border-radius:10px; background:rgba(16,185,129,0.15); border:1px solid #10b981; color:#a7f3d0; font-size:13px; align-items:center; gap:10px;">
+                        <i class="fa-solid fa-wand-magic-sparkles" style="font-size:16px; color:#10b981;"></i>
+                        <span id="extractedAlertText">Extracted from photo! Auto-filled fields below.</span>
+                    </div>
+
+                    <div style="margin-top:10px; font-size:11px; color:#64748b; display:flex; align-items:center; gap:6px;">
+                        <i class="fa-solid fa-circle-info" style="color:#38bdf8;"></i> Uploaded photos are transmitted via Multer <code>multipart/form-data</code> and saved into <code>server/uploads/receipts/</code>.
+                    </div>
+                </div>
+
+                <!-- 3. EXPENSE NAME -->
+                <div class="expense-field" style="margin-bottom:24px;">
+                    <label for="expenseTitle" style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:8px; display:block;">
+                        <i class="fa-solid fa-pen" style="color:#38bdf8; margin-right:6px;"></i> Expense Name
+                    </label>
+                    <div class="expense-input">
+                        <i class="fa-solid fa-pen"></i>
+                        <input type="text" id="expenseTitle" placeholder="Example: Dinner at Cafe Coffee Day" autocomplete="off">
+                    </div>
+                    <span class="expense-error" id="titleError"></span>
+                </div>
+
+                <!-- 4. AMOUNT & CATEGORY -->
+                <div class="expense-two-columns" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;">
+                    <div class="expense-field" style="margin-bottom:0;">
+                        <label for="expenseAmount" style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:8px; display:block;">
+                            <i class="fa-solid fa-indian-rupee-sign" style="color:#10b981; margin-right:6px;"></i> Amount
+                        </label>
+                        <div class="expense-input">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                            <input type="number" id="expenseAmount" placeholder="0.00" min="1" step="0.01">
+                        </div>
+                        <span class="expense-error" id="amountError"></span>
+                    </div>
+
+                    <div class="expense-field" style="margin-bottom:0;">
+                        <label for="expenseCategory" style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:8px; display:block;">
+                            <i class="fa-solid fa-layer-group" style="color:#38bdf8; margin-right:6px;"></i> Category
+                        </label>
+                        <div class="expense-input">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <select id="expenseCategory">
+                                <option value="">Select category</option>
+                                <option value="Food">Food</option>
+                                <option value="Hotel">Hotel</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Activities">Activities</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <span class="expense-error" id="categoryError"></span>
+                    </div>
+                </div>
+
+                <!-- 5. DATE & PAID BY -->
+                <div class="expense-two-columns" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;">
+                    <div class="expense-field" style="margin-bottom:0;">
+                        <label for="expenseDate" style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:8px; display:block;">
+                            <i class="fa-solid fa-calendar-days" style="color:#38bdf8; margin-right:6px;"></i> Expense Date
+                        </label>
+                        <div class="expense-input">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <input type="date" id="expenseDate">
+                        </div>
+                    </div>
+
+                    <div class="expense-field" style="margin-bottom:0;">
+                        <label for="expensePayer" style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:8px; display:block;">
+                            <i class="fa-solid fa-user" style="color:#38bdf8; margin-right:6px;"></i> Paid By
+                        </label>
+                        <div class="expense-input">
+                            <i class="fa-solid fa-user"></i>
+                            <select id="expensePayer"></select>
+                        </div>
+                        <span class="expense-error" id="payerError"></span>
+                    </div>
+                </div>
+
+                <!-- 6. SPLIT AMONG MEMBERS -->
+                <div class="split-section" style="margin-bottom:24px;">
+                    <div class="split-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                        <div>
+                            <h2 style="font-size:16px; margin:0 0 4px; color:#f8fafc;">Split Among</h2>
+                            <p style="font-size:12px; color:#94a3b8; margin:0;">Select the members sharing this expense.</p>
+                        </div>
+                        <button type="button" id="selectAllMembers" style="background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3); padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;">Select All</button>
+                    </div>
+
+                    <div id="splitMembers" class="split-members"></div>
+                    <span class="expense-error" id="membersError"></span>
+                </div>
+
+                <!-- 7. SPLIT TYPE (Equal, %, Custom) -->
+                <div class="split-type-section" style="margin-bottom:24px;">
+                    <h2 style="font-size:16px; margin:0 0 12px; color:#f8fafc;">Split Type</h2>
+                    <div class="split-type-options" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;">
+                        <label class="split-option">
+                            <input type="radio" name="splitType" value="equal" checked>
+                            <span><i class="fa-solid fa-equals"></i> Equal</span>
+                        </label>
+                        <label class="split-option">
+                            <input type="radio" name="splitType" value="percentage">
+                            <span><i class="fa-solid fa-percent"></i> Percentage</span>
+                        </label>
+                        <label class="split-option">
+                            <input type="radio" name="splitType" value="custom">
+                            <span><i class="fa-solid fa-sliders"></i> Custom</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="splitValues" class="split-values"></div>
+
+                <div id="splitSummary" class="split-summary" style="margin-top:16px; margin-bottom:24px;">
+                    <span>Your split</span>
+                    <strong>₹0.00</strong>
+                </div>
+
+                <span class="expense-error form-error" id="formError"></span>
+
+                <!-- 8. ACTION BUTTONS -->
+                <div class="expense-actions" style="display:flex; justify-content:flex-end; gap:14px; margin-top:20px;">
+                    <a href="dashboard.html" class="expense-cancel" style="padding:12px 24px; border-radius:8px; text-decoration:none; color:#94a3b8; font-size:13px; font-weight:600;">Cancel</a>
+                    <button type="submit" class="expense-submit" style="padding:12px 28px; border-radius:8px; font-size:14px; font-weight:600; background:#0284c7; color:#fff; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+                        <i class="fa-solid fa-check"></i> Add Expense
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/expense.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
