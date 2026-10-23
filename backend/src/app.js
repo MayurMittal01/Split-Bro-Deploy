@@ -88,15 +88,6 @@ app.get('/:page', (req, res, next) => {
     return next();
 });
 
-app.get('/', (req, res) => {
-    for (const r of candidateRoots) {
-        const indexPath = path.join(r, 'index.html');
-        if (fs.existsSync(indexPath)) {
-            return res.sendFile(indexPath);
-        }
-    }
-    res.redirect('/login.html');
-});
 
 // 6. Diagnostics & Service Information
 app.get('/api/health', (req, res) => {
@@ -119,13 +110,6 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message: 'Welcome to Split Bro Backend API!',
-        documentation: '/api/health',
-        version: '2.0.0'
-    })
-});
 
 // 7. Mount REST API Routes
 app.use('/api/auth', authRoutes);
